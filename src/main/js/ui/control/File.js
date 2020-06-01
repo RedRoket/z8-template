@@ -25,7 +25,7 @@ Z8.define('org.zenframework.z8.template.controls.File', {
         if (audioPlayer && audioSource) {
             audioPlayer.removeChild(audioSource);
         }
-        if (value && audioPlayer) {
+        if (value && value[0] && audioPlayer) {
             let source = document.createElement('source');
             source.setAttribute('id', 'audioSource');
             source.setAttribute('src', `${value[0].path}?&id=${value[0].id}&session=${Application.session}`);
