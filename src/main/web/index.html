@@ -7,9 +7,62 @@
 
 	<link rel="stylesheet" type="text/css" href="css/${project.name}.css">
 	<link rel="icon" type="image/png" href="css/img/revolt-32x32.png" />
+
+	<link rel="stylesheet"
+		  href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.0/build/styles/default.min.css">
+	<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.0/build/highlight.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 </head>
 
 <body>
 	<script type="text/javascript" src="${project.name}.js"></script>
+	<script>
+		// 3. This function creates an <iframe> (and YouTube player)
+		//    after the API code downloads.
+		var player;
+		function onYouTubeIframeAPIReady() {
+			//TODO fix bug with already initialized value
+			player = new YT.Player('player', {
+				height: '240',
+				width: '100%',
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange,
+					'onPlay': playVideo
+				}
+			});
+		}
+
+		// 4. The API will call this function when the video player is ready.
+		function onPlayerReady(event) {
+			event.target.playVideo();
+		}
+
+		function playVideo(videoUrl) {
+			let videoId = videoUrl.split('?v=')[1];
+			if (this.player && this.player.cueVideoById) {
+				this.player.cueVideoById(videoId);
+				this.player.playVideo();
+			}
+		}
+
+		function stopVideo() {
+			if (player && player.stopVideo) {
+				player.stopVideo();
+			}
+		}
+
+		// 5. The API calls this function when the player's state changes.
+		//    The function indicates that when playing a video (state=1),
+		//    the player should play for six seconds and then stop.
+		var done = false;
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING && !done) {
+				setTimeout(stopVideo, 6000);
+				done = true;
+			}
+		}
+	</script>
 </body>
 </html>

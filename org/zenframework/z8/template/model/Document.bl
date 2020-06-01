@@ -4,6 +4,7 @@ import org.zenframework.z8.base.table.value.FileField;
 import org.zenframework.z8.base.table.value.Link;
 import org.zenframework.z8.base.table.value.StringExpression;
 import org.zenframework.z8.base.table.value.StringField;
+import org.zenframework.z8.base.table.value.TextField;
 
 /*
  * Атрибут [generatable] указывает Z8, что таблица, которую описывает класс,
@@ -43,6 +44,18 @@ public class Document extends Table {
 	public StringField email;
 	/* Максимальная длина значения поля email */
 	email.length = 50;
+
+	[name "XML"]
+    [displayName "XML"]
+    /* TextField - поле для хранения строковой информации неограниченной длины */
+    public TextField xml;
+
+    [name "YouTube"]
+    [displayName "YouTube"]
+    /* StringField - поле для хранения строковой информации ограниченной длины */
+    public StringField youTube;
+    /* Максимальная длина значения поля youTube */
+    youTube.length = 100;
 
 	[displayName "Документ"]
 	/*
