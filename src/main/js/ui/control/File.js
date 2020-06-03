@@ -8,12 +8,12 @@ Z8.define('org.zenframework.z8.template.controls.File', {
     extend: 'Z8.form.field.File',
 
     htmlMarkup: function() {
-        console.log('htmlMarkup');
         let markup = this.callParent();
         let audioPlayer = {
             tag: 'audio',
             id: 'audio-player',
-            controls: ''
+            controls: '',
+            hidden: 'true'
         };
         markup['cn'].add(audioPlayer);
         return markup;
@@ -25,13 +25,21 @@ Z8.define('org.zenframework.z8.template.controls.File', {
         if (audioPlayer && audioSource) {
             audioPlayer.removeChild(audioSource);
         }
-        if (value && value[0] && audioPlayer) {
+        if (value && value[0] && audioPlayer && this.isAudioFile(value[0].name)) {
             let source = document.createElement('source');
             source.setAttribute('id', 'audioSource');
             source.setAttribute('src', `${value[0].path}?&id=${value[0].id}&session=${Application.session}`);
             audioPlayer.appendChild(source);
+            audioPlayer.load();
+            audioPlayer.removeAttribute('hidden');
+        } else if (audioPlayer) {
+            audioPlayer.setAttribute('hidden', 'true');
         }
         this.callParent(value, displayValue);
     },
+
+    isAudioFile: function (file) {
+        return file ? file.endsWith('.mp3') || file.endsWith('.ogg') || file.endsWith('.wav') : false;
+    }
 
 });

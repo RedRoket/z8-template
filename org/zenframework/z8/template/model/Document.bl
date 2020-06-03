@@ -49,6 +49,8 @@ public class Document extends Table {
     [displayName "XML"]
     /* TextField - поле для хранения строковой информации неограниченной длины */
     public TextField xml;
+    xml.colSpan = 4;
+    xml.flex = 1;
 
     [name "YouTube"]
     [displayName "YouTube"]
